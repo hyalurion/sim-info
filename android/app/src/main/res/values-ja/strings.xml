@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">SIM 情報</string>
+    
+    <!-- App Title and Subtitle -->
+    <string name="app_title">SIM 情報</string>
+    <string name="app_subtitle">デバイス SIM カード詳細</string>
+
+    <!-- SIM Information Fields -->
+    <string name="carrier_name">キャリア名</string>
+    <string name="country_region">国/地域</string>
+    <string name="iso_country_code">ISO 国コード</string>
+    <string name="mobile_country_code">モバイル国コード (MCC)</string>
+    <string name="mobile_network_code">モバイルネットワークコード (MNC)</string>
+    <string name="network_type">ネットワークタイプ</string>
+    <string name="voip_support">VoIP 対応</string>
+    <string name="phone_number">電話番号</string>
+    <string name="sim_state">SIM ステータス</string>
+
+    <!-- Sections -->
+    <string name="section_basic_info">基本情報</string>
+    <string name="section_network_status">ネットワーク状態</string>
+    <string name="section_cell_identity">セル識別</string>
+    <string name="section_neighboring_cells">隣接セル情報</string>
+
+    <!-- Network Status Fields -->
+    <string name="network_roaming">ネットワークローミング</string>
+    <string name="roaming_yes">ローミング中</string>
+    <string name="roaming_no">ローミングなし</string>
+    <string name="data_activity">データアクティビティ</string>
+    <string name="data_state">データ状態</string>
+    <string name="signal_strength">信号強度</string>
+
+    <!-- Cell Identity Fields -->
+    <string name="cell_type">セルタイプ</string>
+    <string name="lac">LAC</string>
+    <string name="tac">TAC</string>
+    <string name="ci">CI</string>
+    <string name="cid">CID</string>
+    <string name="nci">NCI</string>
+    <string name="pci">PCI</string>
+    <string name="psc">PSC</string>
+    <string name="earfcn">EARFCN</string>
+    <string name="uarfcn">UARFCN</string>
+    <string name="nrarfcn">NRARFCN</string>
+    <string name="neighboring_cell_info">隣接セル情報</string>
+
+    <!-- SIM State Values -->
+    <string name="sim_state_absent">なし</string>
+    <string name="sim_state_pin_required">PIN が必要</string>
+    <string name="sim_state_puk_required">PUK が必要</string>
+    <string name="sim_state_network_locked">ネットワークロック</string>
+    <string name="sim_state_ready">準備完了</string>
+    <string name="sim_state_not_ready">準備中</string>
+    <string name="sim_state_perm_disabled">永久無効化</string>
+    <string name="sim_state_card_io_error">カード IO エラー</string>
+    <string name="sim_state_card_restricted">カード制限あり</string>
+
+    <!-- VoIP Status -->
+    <string name="voip_supported">対応</string>
+    <string name="voip_not_supported">非対応</string>
+
+    <!-- Common -->
+    <string name="unknown">不明</string>
+    <string name="not_available">利用不可</string>
+    <string name="no_sim_card">SIM カードが検出されませんでした</string>
+    <string name="loading">読み込み中…</string>
+    <string name="error_occurred">SIM 情報の読み込み中にエラーが発生しました</string>
+    <string name="permission_required">SIM 情報を読み取るには電話権限が必要です</string>
+    <string name="grant_permission">権限を付与</string>
+    <string name="copy_success">クリップボードにコピーしました</string>
+    <string name="sim_slot">SIM %d</string>
+
+    <!-- Settings -->
+    <string name="tab_settings">設定</string>
+    <string name="language_settings">言語設定</string>
+    <string name="language_follow_system">システム</string>
+    <string name="language_zh_cn">中国語（簡体字）</string>
+    <string name="language_zh_tw">中国語（繁体字）</string>
+    <string name="language_en">英語</string>
+    <string name="language_ja">日本語</string>
+    <string name="theme_settings">テーマ設定</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="theme_auto">自動</string>
+    <string name="language_switched">言語を%1$sに切り替えました</string>
+    <string name="theme_switched">テーマを%1$sに切り替えました</string>
+
+    <!-- Legal -->
+    <string name="legal_settings">法的情報</string>
+    <string name="open_source_licenses">オープンソースライセンス</string>
+    <string name="licenses_title">オープンソースライセンス</string>
+    <string name="licenses_subtitle">サードパーティソフトウェア</string>
+    <string name="licenses_description">このアプリケーションは以下のオープンソースソフトウェアを使用しています。項目をタップするとライセンスの詳細が表示されます。</string>
+    <string name="licenses_list_title">ライセンス一覧</string>
+    <string name="license_version">バージョン</string>
+    <string name="license_type">ライセンス</string>
+    <string name="back">戻る</string>
+    <string name="no_browser_found">ブラウザが見つかりません</string>
+    <string name="open_link_failed">リンクを開けませんでした</string>
+</resources>

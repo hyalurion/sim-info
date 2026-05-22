@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">SIM Info</string>
+    
+    <!-- App Title and Subtitle -->
+    <string name="app_title">SIM Info</string>
+    <string name="app_subtitle">Device SIM Card Details</string>
+
+    <!-- SIM Information Fields -->
+    <string name="carrier_name">Carrier Name</string>
+    <string name="country_region">Country/Region</string>
+    <string name="iso_country_code">ISO Country Code</string>
+    <string name="mobile_country_code">Mobile Country Code (MCC)</string>
+    <string name="mobile_network_code">Mobile Network Code (MNC)</string>
+    <string name="network_type">Network Type</string>
+    <string name="voip_support">VoIP Support</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="sim_state">SIM State</string>
+
+    <!-- Sections -->
+    <string name="section_basic_info">Basic Info</string>
+    <string name="section_network_status">Network Status</string>
+    <string name="section_cell_identity">Cell Identity</string>
+    <string name="section_neighboring_cells">Neighboring Cells</string>
+
+    <!-- Network Status Fields -->
+    <string name="network_roaming">Network Roaming</string>
+    <string name="roaming_yes">Roaming</string>
+    <string name="roaming_no">Not Roaming</string>
+    <string name="data_activity">Data Activity</string>
+    <string name="data_state">Data State</string>
+    <string name="signal_strength">Signal Strength</string>
+
+    <!-- Cell Identity Fields -->
+    <string name="cell_type">Cell Type</string>
+    <string name="lac">LAC</string>
+    <string name="tac">TAC</string>
+    <string name="ci">CI</string>
+    <string name="cid">CID</string>
+    <string name="nci">NCI</string>
+    <string name="pci">PCI</string>
+    <string name="psc">PSC</string>
+    <string name="earfcn">EARFCN</string>
+    <string name="uarfcn">UARFCN</string>
+    <string name="nrarfcn">NRARFCN</string>
+    <string name="neighboring_cell_info">Neighboring Cells</string>
+
+    <!-- SIM State Values -->
+    <string name="sim_state_absent">Absent</string>
+    <string name="sim_state_pin_required">PIN Required</string>
+    <string name="sim_state_puk_required">PUK Required</string>
+    <string name="sim_state_network_locked">Network Locked</string>
+    <string name="sim_state_ready">Ready</string>
+    <string name="sim_state_not_ready">Not Ready</string>
+    <string name="sim_state_perm_disabled">Permanently Disabled</string>
+    <string name="sim_state_card_io_error">Card IO Error</string>
+    <string name="sim_state_card_restricted">Card Restricted</string>
+
+    <!-- VoIP Status -->
+    <string name="voip_supported">Supported</string>
+    <string name="voip_not_supported">Not Supported</string>
+
+    <!-- Common -->
+    <string name="unknown">Unknown</string>
+    <string name="not_available">N/A</string>
+    <string name="no_sim_card">No SIM Card Detected</string>
+    <string name="loading">Loading…</string>
+    <string name="error_occurred">Error occurred while reading SIM information</string>
+    <string name="permission_required">Phone permission is required to read SIM information</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="copy_success">Copied to clipboard</string>
+    <string name="sim_slot">SIM %d</string>
+
+    <!-- Settings -->
+    <string name="tab_settings">Settings</string>
+    <string name="language_settings">Language Settings</string>
+    <string name="language_follow_system">System</string>
+    <string name="language_zh_cn">Chinese (Simplified)</string>
+    <string name="language_zh_tw">Chinese (Traditional)</string>
+    <string name="language_en">English</string>
+    <string name="language_ja">Japanese</string>
+    <string name="theme_settings">Theme Settings</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_auto">Auto</string>
+    <string name="language_switched">Language switched to %1$s</string>
+    <string name="theme_switched">Theme switched to %1$s</string>
+
+    <!-- Legal -->
+    <string name="legal_settings">Legal</string>
+    <string name="open_source_licenses">Open Source Licenses</string>
+    <string name="licenses_title">Open Source Licenses</string>
+    <string name="licenses_subtitle">Third-Party Software</string>
+    <string name="licenses_description">This application uses the following open source software. Tap on any item to view its license details.</string>
+    <string name="licenses_list_title">Licenses</string>
+    <string name="license_version">Version</string>
+    <string name="license_type">License</string>
+    <string name="back">Back</string>
+    <string name="no_browser_found">No browser found</string>
+    <string name="open_link_failed">Failed to open link</string>
+</resources>

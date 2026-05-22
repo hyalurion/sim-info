@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">SIM 資訊</string>
+    
+    <!-- App Title and Subtitle -->
+    <string name="app_title">SIM 資訊</string>
+    <string name="app_subtitle">裝置 SIM 卡詳情</string>
+
+    <!-- SIM Information Fields -->
+    <string name="carrier_name">運營商名稱</string>
+    <string name="country_region">國家/地區</string>
+    <string name="iso_country_code">ISO 國家代碼</string>
+    <string name="mobile_country_code">移動國家代碼 (MCC)</string>
+    <string name="mobile_network_code">移動網絡代碼 (MNC)</string>
+    <string name="network_type">網絡類型</string>
+    <string name="voip_support">VoIP 支援</string>
+    <string name="phone_number">電話號碼</string>
+    <string name="sim_state">SIM 卡狀態</string>
+
+    <!-- Sections -->
+    <string name="section_basic_info">基本資訊</string>
+    <string name="section_network_status">網絡狀態</string>
+    <string name="section_cell_identity">基地台識別</string>
+    <string name="section_neighboring_cells">鄰區資訊</string>
+
+    <!-- Network Status Fields -->
+    <string name="network_roaming">網絡漫遊</string>
+    <string name="roaming_yes">漫遊中</string>
+    <string name="roaming_no">未漫遊</string>
+    <string name="data_activity">數據活動</string>
+    <string name="data_state">數據狀態</string>
+    <string name="signal_strength">訊號強度</string>
+
+    <!-- Cell Identity Fields -->
+    <string name="cell_type">基地台類型</string>
+    <string name="lac">LAC</string>
+    <string name="tac">TAC</string>
+    <string name="ci">CI</string>
+    <string name="cid">CID</string>
+    <string name="nci">NCI</string>
+    <string name="pci">PCI</string>
+    <string name="psc">PSC</string>
+    <string name="earfcn">EARFCN</string>
+    <string name="uarfcn">UARFCN</string>
+    <string name="nrarfcn">NRARFCN</string>
+    <string name="neighboring_cell_info">鄰區資訊</string>
+
+    <!-- SIM State Values -->
+    <string name="sim_state_absent">不存在</string>
+    <string name="sim_state_pin_required">需要 PIN 碼</string>
+    <string name="sim_state_puk_required">需要 PUK 碼</string>
+    <string name="sim_state_network_locked">網絡鎖定</string>
+    <string name="sim_state_ready">就緒</string>
+    <string name="sim_state_not_ready">未就緒</string>
+    <string name="sim_state_perm_disabled">永久禁用</string>
+    <string name="sim_state_card_io_error">卡 IO 錯誤</string>
+    <string name="sim_state_card_restricted">卡受限</string>
+
+    <!-- VoIP Status -->
+    <string name="voip_supported">支援</string>
+    <string name="voip_not_supported">不支援</string>
+
+    <!-- Common -->
+    <string name="unknown">未知</string>
+    <string name="not_available">不可用</string>
+    <string name="no_sim_card">未偵測到 SIM 卡</string>
+    <string name="loading">載入中…</string>
+    <string name="error_occurred">讀取 SIM 資訊時發生錯誤</string>
+    <string name="permission_required">需要電話權限才能讀取 SIM 資訊</string>
+    <string name="grant_permission">授予權限</string>
+    <string name="copy_success">已複製到剪貼簿</string>
+    <string name="sim_slot">SIM %d</string>
+
+    <!-- Settings -->
+    <string name="tab_settings">設定</string>
+    <string name="language_settings">語言設定</string>
+    <string name="language_follow_system">跟隨系統</string>
+    <string name="language_zh_cn">簡體中文</string>
+    <string name="language_zh_tw">繁體中文</string>
+    <string name="language_en">英文</string>
+    <string name="language_ja">日文</string>
+    <string name="theme_settings">主題設定</string>
+    <string name="theme_light">淺色</string>
+    <string name="theme_dark">深色</string>
+    <string name="theme_auto">自動</string>
+    <string name="language_switched">語言已切換為 %1$s</string>
+    <string name="theme_switched">主題已切換為 %1$s</string>
+
+    <!-- Legal -->
+    <string name="legal_settings">法律資訊</string>
+    <string name="open_source_licenses">開源軟體授權</string>
+    <string name="licenses_title">開源軟體授權</string>
+    <string name="licenses_subtitle">第三方軟體</string>
+    <string name="licenses_description">本應用使用了以下開源軟體。點擊任意項目查看其授權詳情。</string>
+    <string name="licenses_list_title">授權列表</string>
+    <string name="license_version">版本</string>
+    <string name="license_type">授權類型</string>
+    <string name="back">返回</string>
+    <string name="no_browser_found">未找到瀏覽器</string>
+    <string name="open_link_failed">開啟連結失敗</string>
+</resources>
