@@ -23,7 +23,7 @@ class ThemeManager(private val context: Context) {
 
     // Get current theme mode
     fun getCurrentTheme(): String {
-        // Since Compose theme system is managed by GiftTheme, here we only return the saved theme setting
+        // Since Compose theme system is managed by SimInfoTheme, here we only return the saved theme setting
         return getSavedTheme()
     }
 }

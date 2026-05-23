@@ -40,7 +40,7 @@ internal val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun GiftTheme(
+fun SimInfoTheme(
     themeMode: String = "auto", // add themeMode parameter, support "light", "dark", "auto"
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false, // disable dynamic color, use custom theme
@@ -66,7 +66,7 @@ fun GiftTheme(
 }
 
 @Composable
-fun GiftTheme(
+fun SimInfoTheme(
     controller: ThemeController,
     content: @Composable () -> Unit
 ) {
@@ -78,7 +78,7 @@ fun GiftTheme(
 }
 
 @Composable
-fun GiftTheme(
+fun SimInfoTheme(
     controller: ThemeController,
     languageController: LanguageController,
     content: @Composable () -> Unit

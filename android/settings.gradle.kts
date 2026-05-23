@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "gift"
+rootProject.name = "sim-info"
 include(":app")

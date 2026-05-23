@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.hyalurion.sim.info.data.LanguageManager
 import com.hyalurion.sim.info.data.ThemeManager
-import com.hyalurion.sim.info.ui.GiftApp
-import com.hyalurion.sim.info.ui.theme.GiftTheme
+import com.hyalurion.sim.info.ui.SimInfoApp
+import com.hyalurion.sim.info.ui.theme.SimInfoTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         languageManager.applyLanguage(savedLanguage)
         
         setContent {
-            GiftApp()
+            SimInfoApp()
         }
     }
     
@@ -40,8 +40,8 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun GiftAppPreview() {
-    GiftTheme {
-        GiftApp()
+fun SimInfoAppPreview() {
+    SimInfoTheme {
+        SimInfoApp()
     }
 }

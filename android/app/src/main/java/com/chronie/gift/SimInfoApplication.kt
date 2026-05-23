@@ -16,10 +16,10 @@ import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class GiftApplication : Application() {
+class SimInfoApplication : Application() {
 
     companion object {
-        private const val TAG = "GiftApplication"
+        private const val TAG = "SimInfoApplication"
         private const val CRASH_LOG_DIR = "crash_logs"
     }
 

@@ -6,11 +6,15 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
@@ -22,12 +26,13 @@ import com.hyalurion.sim.info.ui.screens.LicensesScreen
 import com.hyalurion.sim.info.ui.screens.SettingsScreen
 import com.hyalurion.sim.info.ui.screens.SimInfoScreen
 import com.hyalurion.sim.info.ui.theme.ColorSchemeMode
-import com.hyalurion.sim.info.ui.theme.GiftTheme
+import com.hyalurion.sim.info.ui.theme.SimInfoTheme
 import com.hyalurion.sim.info.ui.theme.ThemeController
 import com.hyalurion.sim.info.ui.theme.LanguageController
+import top.yukonga.miuix.kmp.theme.MiuixTheme
 
 @Composable
-fun GiftApp() {
+fun SimInfoApp() {
     val context = LocalContext.current
     val navController = rememberNavController()
     
@@ -108,55 +113,61 @@ fun GiftApp() {
         languageManager.applyLanguage(newLanguageCode)
     }
     
-    GiftTheme(controller = controller, languageController = languageController) {
-        NavHost(
-            navController = navController,
-            startDestination = "sim_info",
-            enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(300)
-                )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(300)
-                )
-            },
-            popEnterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(300)
-                )
-            },
-            popExitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(300)
-                )
-            }
+    SimInfoTheme(controller = controller, languageController = languageController) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MiuixTheme.colorScheme.background)
         ) {
-            composable("sim_info") {
-                SimInfoScreen(
-                    hasPermission = hasPhonePermission,
-                    onRequestPermission = requestPermission,
-                    onNavigateToSettings = { navController.navigate("settings") }
-                )
-            }
-            composable("settings") {
-                SettingsScreen(
-                    onThemeUpdated = updateThemeMode,
-                    onLanguageUpdated = updateLanguageCode,
-                    currentLanguageCode = currentLanguageCode.value,
-                    onNavigateToLicenses = { navController.navigate("licenses") },
-                    onBack = { navController.popBackStack() }
-                )
-            }
-            composable("licenses") {
-                LicensesScreen(
-                    onBack = { navController.popBackStack() }
-                )
+            NavHost(
+                navController = navController,
+                startDestination = "sim_info",
+                enterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(300)
+                    )
+                },
+                exitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left,
+                        animationSpec = tween(300)
+                    )
+                },
+                popEnterTransition = {
+                    slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        animationSpec = tween(300)
+                    )
+                },
+                popExitTransition = {
+                    slideOutOfContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Right,
+                        animationSpec = tween(300)
+                    )
+                }
+            ) {
+                composable("sim_info") {
+                    SimInfoScreen(
+                        hasPermission = hasPhonePermission,
+                        onRequestPermission = requestPermission,
+                        onNavigateToSettings = { navController.navigate("settings") }
+                    )
+                }
+                composable("settings") {
+                    SettingsScreen(
+                        onThemeUpdated = updateThemeMode,
+                        onLanguageUpdated = updateLanguageCode,
+                        currentLanguageCode = currentLanguageCode.value,
+                        onNavigateToLicenses = { navController.navigate("licenses") },
+                        onBack = { navController.popBackStack() }
+                    )
+                }
+                composable("licenses") {
+                    LicensesScreen(
+                        onBack = { navController.popBackStack() }
+                    )
+                }
             }
         }
     }
