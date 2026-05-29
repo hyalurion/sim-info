@@ -51,7 +51,7 @@ fun LicensesScreen(
     val uriHandler = LocalUriHandler.current
     val scrollBehavior = MiuixScrollBehavior()
     var selectedLicense by remember { mutableStateOf<com.hyalurion.sim.info.data.LicenseInfo?>(null) }
-    val showDialog = remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -109,7 +109,7 @@ fun LicensesScreen(
                     showIndication = true,
                     onClick = {
                         selectedLicense = license
-                        showDialog.value = true
+                        showDialog = true
                     },
                     insideMargin = androidx.compose.foundation.layout.PaddingValues(16.dp)
                 ) {
@@ -141,18 +141,17 @@ fun LicensesScreen(
         }
     }
 
-    if (showDialog.value && selectedLicense != null) {
-        val license = selectedLicense!!
-        val dismiss = LocalDismissState.current
+    selectedLicense?.let { license ->
         WindowDialog(
             title = license.name,
-            show = showDialog.value,
-            onDismissRequest = {
-                dismiss?.invoke()
-                showDialog.value = false
+            show = showDialog,
+            onDismissRequest = { showDialog = false },
+            onDismissFinished = {
                 selectedLicense = null
             }
         ) {
+            val dismiss = LocalDismissState.current
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
