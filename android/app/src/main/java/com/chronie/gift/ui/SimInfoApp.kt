@@ -30,6 +30,7 @@ import com.hyalurion.sim.info.ui.theme.SimInfoTheme
 import com.hyalurion.sim.info.ui.theme.ThemeController
 import com.hyalurion.sim.info.ui.theme.LanguageController
 import top.yukonga.miuix.kmp.theme.MiuixTheme
+import top.yukonga.miuix.kmp.basic.Surface
 
 @Composable
 fun SimInfoApp() {
@@ -114,10 +115,9 @@ fun SimInfoApp() {
     }
     
     SimInfoTheme(controller = controller, languageController = languageController) {
-        Box(
+        Surface(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MiuixTheme.colorScheme.background)
         ) {
             NavHost(
                 navController = navController,

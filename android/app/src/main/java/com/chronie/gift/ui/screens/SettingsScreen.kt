@@ -117,10 +117,10 @@ fun SettingsScreen(
                 // Add a small space below largeTitle
                 Spacer(modifier = Modifier.height(8.dp))
                 
-                SmallTitle(text = stringResource(id = R.string.language_settings))
+                SmallTitle(text = stringResource(id = R.string.general_settings_title))
                 
                 Card(
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    modifier = Modifier.padding(bottom = 16.dp)
                 ) {
                     OverlayDropdownPreference(
                         title = stringResource(id = R.string.language_settings),
@@ -133,13 +133,6 @@ fun SettingsScreen(
                             Toast.makeText(context, context.getString(R.string.language_switched, languageOptions[index]), Toast.LENGTH_SHORT).show()
                         }
                     )
-                }
-                
-                SmallTitle(text = stringResource(id = R.string.theme_settings))
-                
-                Card(
-                    modifier = Modifier.padding(bottom = 24.dp)
-                ) {
                     OverlayDropdownPreference(
                         title = stringResource(id = R.string.theme_settings),
                         items = themeOptions,
