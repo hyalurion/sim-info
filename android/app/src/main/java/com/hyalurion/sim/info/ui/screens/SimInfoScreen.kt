@@ -10,8 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,7 +19,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import top.yukonga.miuix.kmp.basic.BasicComponent
 import top.yukonga.miuix.kmp.basic.Card
@@ -28,6 +29,9 @@ import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.Text
+import top.yukonga.miuix.kmp.basic.TopAppBar
+import top.yukonga.miuix.kmp.basic.Scaffold
+import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Copy
 import top.yukonga.miuix.kmp.icon.extended.Settings
@@ -37,7 +41,6 @@ import com.hyalurion.sim.info.R
 import com.hyalurion.sim.info.data.CellIdentityInfo
 import com.hyalurion.sim.info.data.SimInfo
 import com.hyalurion.sim.info.data.SimInfoManager
-import androidx.compose.ui.res.stringResource
 
 @SuppressLint("LocalContextGetResourceValueCall")
 @Composable
@@ -51,14 +54,14 @@ fun SimInfoScreen(
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
 
-    // Request permission on first launch
+    val scrollBehavior = MiuixScrollBehavior()
+
     LaunchedEffect(Unit) {
         if (!hasPermission) {
             onRequestPermission()
         }
     }
 
-    // Load SIM info when permission state changes
     LaunchedEffect(hasPermission) @androidx.annotation.RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) {
         if (hasPermission) {
             try {
@@ -80,79 +83,109 @@ fun SimInfoScreen(
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        when {
-            isLoading -> {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = context.getString(R.string.loading))
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = stringResource(R.string.app_name),
+                largeTitle = stringResource(R.string.app_name),
+                navigationIcon = {},
+                scrollBehavior = scrollBehavior
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+        ) {
+            when {
+                isLoading -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = paddingValues.calculateTopPadding()),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = context.getString(R.string.loading),
+                            style = MiuixTheme.textStyles.body1,
+                            color = MiuixTheme.colorScheme.onSurface
+                        )
+                    }
                 }
-            }
-            error != null -> {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = error!!)
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    // Retry permission request button
-                    if (!hasPermission) {
-                        BasicComponent(
-                            title = context.getString(R.string.grant_permission),
-                            onClick = onRequestPermission
+                error != null -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(top = paddingValues.calculateTopPadding()),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = error!!,
+                            style = MiuixTheme.textStyles.body1,
+                            color = MiuixTheme.colorScheme.onSurface,
+                            modifier = Modifier.padding(horizontal = 16.dp)
                         )
                         
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
-                    
-                    // Settings button in error state
-                    IconButton(onClick = onNavigateToSettings) {
-                        Icon(
-                            imageVector = MiuixIcons.Settings,
-                            contentDescription = "Settings",
-                            tint = MiuixTheme.colorScheme.primary
-                        )
-                    }
-                }
-            }
-            simInfoList != null -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    // Settings button at the top
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, bottom = 8.dp),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(onClick = onNavigateToSettings) {
-                            Icon(
-                                imageVector = MiuixIcons.Settings,
-                                contentDescription = "Settings",
-                                tint = MiuixTheme.colorScheme.primary
-                            )
+                        Spacer(modifier = Modifier.height(24.dp))
+
+                        if (!hasPermission) {
+                            Card(
+                                onClick = onRequestPermission,
+                                showIndication = true,
+                                pressFeedbackType = top.yukonga.miuix.kmp.utils.PressFeedbackType.Sink
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 24.dp, vertical = 16.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = context.getString(R.string.grant_permission),
+                                        style = MiuixTheme.textStyles.body1,
+                                        color = MiuixTheme.colorScheme.primary
+                                    )
+                                }
+                            }
+                            
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
-                    
-                    simInfoList!!.forEachIndexed { index, simInfo ->
-                        SimInfoCard(simInfo = simInfo, slotIndex = index + 1)
+                }
+                simInfoList != null -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .nestedScroll(scrollBehavior.nestedScrollConnection),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                            top = paddingValues.calculateTopPadding(),
+                            bottom = 16.dp
+                        ),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 8.dp),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                IconButton(onClick = onNavigateToSettings) {
+                                    Icon(
+                                        imageVector = MiuixIcons.Settings,
+                                        contentDescription = "Settings",
+                                        tint = MiuixTheme.colorScheme.onBackground
+                                    )
+                                }
+                            }
+                        }
                         
-                        if (index < simInfoList!!.lastIndex) {
-                            Spacer(modifier = Modifier.height(12.dp))
+                        items(simInfoList!!.size) { index ->
+                            val simInfo = simInfoList!![index]
+                            SimInfoCard(simInfo = simInfo, slotIndex = index + 1)
                         }
                     }
                 }
@@ -165,21 +198,37 @@ fun SimInfoScreen(
 private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
     val context = LocalContext.current
     
-    Card {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // SIM Slot Title
-            Text(
-                text = stringResource(R.string.sim_slot, slotIndex),
-                style = MiuixTheme.textStyles.headline1,
-                color = MiuixTheme.colorScheme.primary
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(R.string.sim_slot, slotIndex),
+                    style = MiuixTheme.textStyles.headline1,
+                    color = MiuixTheme.colorScheme.primary
+                )
+                
+                simInfo.simState?.let { state ->
+                    Text(
+                        text = state,
+                        style = MiuixTheme.textStyles.body2,
+                        color = MiuixTheme.colorScheme.onSurface
+                    )
+                }
+            }
             
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            // Basic Info Section
             SmallTitle(text = stringResource(R.string.section_basic_info))
+            
+            Spacer(modifier = Modifier.height(8.dp))
 
             InfoListItem(
                 title = stringResource(R.string.carrier_name),
@@ -187,21 +236,18 @@ private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
                 onCopy = { copyToClipboard(context, simInfo.carrierName) }
             )
 
-            // Country/Region - Display full country name
             InfoListItem(
                 title = stringResource(R.string.country_region),
                 value = simInfo.countryName ?: simInfo.countryIso ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.countryName ?: simInfo.countryIso) }
             )
 
-            // ISO Country Code
             InfoListItem(
                 title = stringResource(R.string.iso_country_code),
                 value = simInfo.countryIso ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.countryIso) }
             )
 
-            // MCC
             InfoListItem(
                 title = stringResource(R.string.mobile_country_code),
                 value = simInfo.mcc ?: stringResource(R.string.not_available),
@@ -220,16 +266,11 @@ private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
                 onCopy = { copyToClipboard(context, simInfo.phoneNumber) }
             )
 
-            InfoListItem(
-                title = stringResource(R.string.sim_state),
-                value = simInfo.simState ?: stringResource(R.string.not_available),
-                showCopyIcon = false
-            )
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Network Status Section
             SmallTitle(text = stringResource(R.string.section_network_status))
+            
+            Spacer(modifier = Modifier.height(8.dp))
 
             InfoListItem(
                 title = stringResource(R.string.network_type),
@@ -277,20 +318,22 @@ private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
                 onCopy = { copyToClipboard(context, simInfo.signalStrength) }
             )
 
-            // Cell Identity Section
             if (simInfo.cellIdentity != null) {
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 SmallTitle(text = stringResource(R.string.section_cell_identity))
+                
+                Spacer(modifier = Modifier.height(8.dp))
 
                 CellIdentitySection(simInfo.cellIdentity)
             }
 
-            // Neighboring Cell Info
             if (!simInfo.neighboringCellInfo.isNullOrBlank()) {
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 SmallTitle(text = stringResource(R.string.section_neighboring_cells))
+                
+                Spacer(modifier = Modifier.height(8.dp))
 
                 InfoListItem(
                     title = stringResource(R.string.neighboring_cell_info),
@@ -314,7 +357,6 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
         )
     }
 
-    // LAC (GSM/WCDMA) or TAC (LTE/NR)
     val lacTac = cellIdentity.lac ?: cellIdentity.tac
     if (lacTac != null) {
         val label = if (cellIdentity.tac != null) {
@@ -329,7 +371,6 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
         )
     }
 
-    // CI (LTE) or CID (GSM/WCDMA) or NCI (NR)
     val ciCid = cellIdentity.ci ?: cellIdentity.cid ?: cellIdentity.nci
     if (ciCid != null) {
         val label = when {
