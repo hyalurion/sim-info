@@ -59,7 +59,7 @@ fun SimInfoScreen(
     }
 
     // Load SIM info when permission state changes
-    LaunchedEffect(hasPermission) {
+    LaunchedEffect(hasPermission) @androidx.annotation.RequiresPermission(android.Manifest.permission.READ_PHONE_STATE) {
         if (hasPermission) {
             try {
                 val simInfoManager = SimInfoManager(context)

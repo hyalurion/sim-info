@@ -9,7 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.hyalurion.sim.info.data.LanguageManager
 import com.hyalurion.sim.info.ui.SimInfoApp
+import com.hyalurion.sim.info.ui.theme.LanguageController
 import com.hyalurion.sim.info.ui.theme.SimInfoTheme
+import top.yukonga.miuix.kmp.theme.ColorSchemeMode
+import top.yukonga.miuix.kmp.theme.ThemeController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +43,10 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun SimInfoAppPreview() {
-    SimInfoTheme {
+    SimInfoTheme(
+        controller = ThemeController(ColorSchemeMode.System),
+        languageController = LanguageController(null)
+    ) {
         SimInfoApp()
     }
 }

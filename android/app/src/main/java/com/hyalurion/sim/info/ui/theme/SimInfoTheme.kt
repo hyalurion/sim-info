@@ -1,38 +1,50 @@
 package com.hyalurion.sim.info.ui.theme
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+import top.yukonga.miuix.kmp.theme.ColorSchemeMode
 import top.yukonga.miuix.kmp.theme.MiuixTheme
+import top.yukonga.miuix.kmp.theme.ThemeController
 import java.util.Locale
 
 val LocalLocale = staticCompositionLocalOf<Locale> { Locale.ENGLISH }
 
+@SuppressLint("LocalContextConfigurationRead")
 @Composable
 fun SimInfoTheme(
-    themeMode: String = "auto",
+    controller: ThemeController,
+    languageController: LanguageController,
     content: @Composable () -> Unit
 ) {
-    val colorSchemeMode = when (themeMode) {
-        "dark" -> ColorSchemeMode.Dark
-        "light" -> ColorSchemeMode.Light
-        else -> ColorSchemeMode.System
-    }
-    
-    val darkTheme = when (colorSchemeMode) {
+    val locale = languageController.currentLocale
+    val darkTheme = when (controller.colorSchemeMode) {
         ColorSchemeMode.Dark -> true
         ColorSchemeMode.Light -> false
         else -> isSystemInDarkTheme()
     }
-
+    
     UpdateSystemUi(darkTheme)
-
-    val controller = ThemeController(colorSchemeMode)
-    MiuixTheme(controller = controller) {
-        content()
+    
+    val context = LocalContext.current
+    val configuration = Configuration(context.resources.configuration)
+    configuration.setLocale(locale)
+    val newContext = context.createConfigurationContext(configuration)
+    
+    CompositionLocalProvider(
+        LocalContext provides newContext,
+        LocalLocale provides locale
+    ) {
+        MiuixTheme(controller = controller) {
+            content()
+        }
     }
 }
 

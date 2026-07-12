@@ -24,6 +24,7 @@ import com.hyalurion.sim.info.ui.screens.LicensesScreen
 import com.hyalurion.sim.info.ui.screens.SettingsScreen
 import com.hyalurion.sim.info.ui.screens.SimInfoScreen
 import top.yukonga.miuix.kmp.theme.ColorSchemeMode
+import top.yukonga.miuix.kmp.theme.ThemeController
 import com.hyalurion.sim.info.ui.theme.SimInfoTheme
 import com.hyalurion.sim.info.ui.theme.LanguageController
 import top.yukonga.miuix.kmp.basic.Surface
@@ -85,6 +86,10 @@ fun SimInfoApp() {
     
     val languageController = remember {
         LanguageController(savedLanguage)
+    }
+    
+    val controller = remember(currentThemeMode) {
+        ThemeController(currentThemeMode)
     }
 
     // Update theme mode callback

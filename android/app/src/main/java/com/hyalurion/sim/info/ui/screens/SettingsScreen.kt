@@ -59,15 +59,9 @@ fun SettingsScreen(
     )
     
     val languageCodes = listOf(null, "en", "ja", "zh-CN", "zh-TW")
-    
-    val initialLanguageIndex = if (currentLanguageCode == null) {
-        0
-    } else {
-        languageCodes.indexOf(currentLanguageCode).takeIf { it >= 0 } ?: 0
-    }
-    
+
     var selectedLanguageIndex by remember {
-        mutableIntStateOf(initialLanguageIndex)
+        mutableIntStateOf(languageCodes.indexOf(currentLanguageCode).coerceAtLeast(0))
     }
     
     val themeOptions = listOf(
