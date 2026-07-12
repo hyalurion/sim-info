@@ -8,3 +8,5 @@ android/keystore.properties
 android/*.jks
 android/app/*.jks
 release.keystore
+app-release.dm
+android/app/release/output-metadata.json
