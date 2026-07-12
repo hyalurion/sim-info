@@ -1,5 +1,6 @@
 package com.hyalurion.sim.info.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,7 +37,9 @@ import com.hyalurion.sim.info.R
 import com.hyalurion.sim.info.data.CellIdentityInfo
 import com.hyalurion.sim.info.data.SimInfo
 import com.hyalurion.sim.info.data.SimInfoManager
+import androidx.compose.ui.res.stringResource
 
+@SuppressLint("LocalContextGetResourceValueCall")
 @Composable
 fun SimInfoScreen(
     hasPermission: Boolean = false,
@@ -66,7 +69,7 @@ fun SimInfoScreen(
                 } else {
                     simInfoList = infoList
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 error = context.getString(R.string.error_occurred)
             } finally {
                 isLoading = false
@@ -168,7 +171,7 @@ private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
         ) {
             // SIM Slot Title
             Text(
-                text = context.getString(R.string.sim_slot, slotIndex),
+                text = stringResource(R.string.sim_slot, slotIndex),
                 style = MiuixTheme.textStyles.headline1,
                 color = MiuixTheme.colorScheme.primary
             )
@@ -176,101 +179,101 @@ private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
             Spacer(modifier = Modifier.height(12.dp))
 
             // Basic Info Section
-            SmallTitle(text = context.getString(R.string.section_basic_info))
+            SmallTitle(text = stringResource(R.string.section_basic_info))
 
             InfoListItem(
-                title = context.getString(R.string.carrier_name),
-                value = simInfo.carrierName ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.carrier_name),
+                value = simInfo.carrierName ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.carrierName) }
             )
 
             // Country/Region - Display full country name
             InfoListItem(
-                title = context.getString(R.string.country_region),
-                value = simInfo.countryName ?: simInfo.countryIso ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.country_region),
+                value = simInfo.countryName ?: simInfo.countryIso ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.countryName ?: simInfo.countryIso) }
             )
 
             // ISO Country Code
             InfoListItem(
-                title = context.getString(R.string.iso_country_code),
-                value = simInfo.countryIso ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.iso_country_code),
+                value = simInfo.countryIso ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.countryIso) }
             )
 
             // MCC
             InfoListItem(
-                title = context.getString(R.string.mobile_country_code),
-                value = simInfo.mcc ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.mobile_country_code),
+                value = simInfo.mcc ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.mcc) }
             )
 
             InfoListItem(
-                title = context.getString(R.string.mobile_network_code),
-                value = simInfo.mnc ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.mobile_network_code),
+                value = simInfo.mnc ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.mnc) }
             )
 
             InfoListItem(
-                title = context.getString(R.string.phone_number),
-                value = simInfo.phoneNumber ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.phone_number),
+                value = simInfo.phoneNumber ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.phoneNumber) }
             )
 
             InfoListItem(
-                title = context.getString(R.string.sim_state),
-                value = simInfo.simState ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.sim_state),
+                value = simInfo.simState ?: stringResource(R.string.not_available),
                 showCopyIcon = false
             )
 
             Spacer(modifier = Modifier.height(12.dp))
 
             // Network Status Section
-            SmallTitle(text = context.getString(R.string.section_network_status))
+            SmallTitle(text = stringResource(R.string.section_network_status))
 
             InfoListItem(
-                title = context.getString(R.string.network_type),
-                value = simInfo.networkType ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.network_type),
+                value = simInfo.networkType ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.networkType) }
             )
 
             val roamingStatus = when (simInfo.isNetworkRoaming) {
-                true -> context.getString(R.string.roaming_yes)
-                false -> context.getString(R.string.roaming_no)
-                null -> context.getString(R.string.not_available)
+                true -> stringResource(R.string.roaming_yes)
+                false -> stringResource(R.string.roaming_no)
+                null -> stringResource(R.string.not_available)
             }
             InfoListItem(
-                title = context.getString(R.string.network_roaming),
+                title = stringResource(R.string.network_roaming),
                 value = roamingStatus,
                 showCopyIcon = false
             )
 
             InfoListItem(
-                title = context.getString(R.string.data_activity),
-                value = simInfo.dataActivity ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.data_activity),
+                value = simInfo.dataActivity ?: stringResource(R.string.not_available),
                 showCopyIcon = false
             )
 
             InfoListItem(
-                title = context.getString(R.string.data_state),
-                value = simInfo.dataState ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.data_state),
+                value = simInfo.dataState ?: stringResource(R.string.not_available),
                 showCopyIcon = false
             )
 
             val voipStatus = when (simInfo.isVoipAvailable) {
-                true -> context.getString(R.string.voip_supported)
-                false -> context.getString(R.string.voip_not_supported)
-                null -> context.getString(R.string.not_available)
+                true -> stringResource(R.string.voip_supported)
+                false -> stringResource(R.string.voip_not_supported)
+                null -> stringResource(R.string.not_available)
             }
             InfoListItem(
-                title = context.getString(R.string.voip_support),
+                title = stringResource(R.string.voip_support),
                 value = voipStatus,
                 showCopyIcon = false
             )
 
             InfoListItem(
-                title = context.getString(R.string.signal_strength),
-                value = simInfo.signalStrength ?: context.getString(R.string.not_available),
+                title = stringResource(R.string.signal_strength),
+                value = simInfo.signalStrength ?: stringResource(R.string.not_available),
                 onCopy = { copyToClipboard(context, simInfo.signalStrength) }
             )
 
@@ -278,7 +281,7 @@ private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
             if (simInfo.cellIdentity != null) {
                 Spacer(modifier = Modifier.height(12.dp))
 
-                SmallTitle(text = context.getString(R.string.section_cell_identity))
+                SmallTitle(text = stringResource(R.string.section_cell_identity))
 
                 CellIdentitySection(simInfo.cellIdentity)
             }
@@ -287,10 +290,10 @@ private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
             if (!simInfo.neighboringCellInfo.isNullOrBlank()) {
                 Spacer(modifier = Modifier.height(12.dp))
 
-                SmallTitle(text = context.getString(R.string.section_neighboring_cells))
+                SmallTitle(text = stringResource(R.string.section_neighboring_cells))
 
                 InfoListItem(
-                    title = context.getString(R.string.neighboring_cell_info),
+                    title = stringResource(R.string.neighboring_cell_info),
                     value = simInfo.neighboringCellInfo,
                     onCopy = { copyToClipboard(context, simInfo.neighboringCellInfo) }
                 )
@@ -305,7 +308,7 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
 
     cellIdentity.type?.let { type ->
         InfoListItem(
-            title = context.getString(R.string.cell_type),
+            title = stringResource(R.string.cell_type),
             value = type,
             showCopyIcon = false
         )
@@ -315,9 +318,9 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
     val lacTac = cellIdentity.lac ?: cellIdentity.tac
     if (lacTac != null) {
         val label = if (cellIdentity.tac != null) {
-            context.getString(R.string.tac)
+            stringResource(R.string.tac)
         } else {
-            context.getString(R.string.lac)
+            stringResource(R.string.lac)
         }
         InfoListItem(
             title = label,
@@ -330,9 +333,9 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
     val ciCid = cellIdentity.ci ?: cellIdentity.cid ?: cellIdentity.nci
     if (ciCid != null) {
         val label = when {
-            cellIdentity.nci != null -> context.getString(R.string.nci)
-            cellIdentity.ci != null -> context.getString(R.string.ci)
-            else -> context.getString(R.string.cid)
+            cellIdentity.nci != null -> stringResource(R.string.nci)
+            cellIdentity.ci != null -> stringResource(R.string.ci)
+            else -> stringResource(R.string.cid)
         }
         InfoListItem(
             title = label,
@@ -343,7 +346,7 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
 
     cellIdentity.pci?.let { pci ->
         InfoListItem(
-            title = context.getString(R.string.pci),
+            title = stringResource(R.string.pci),
             value = pci,
             onCopy = { copyToClipboard(context, pci) }
         )
@@ -351,7 +354,7 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
 
     cellIdentity.psc?.let { psc ->
         InfoListItem(
-            title = context.getString(R.string.psc),
+            title = stringResource(R.string.psc),
             value = psc,
             onCopy = { copyToClipboard(context, psc) }
         )
@@ -359,7 +362,7 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
 
     cellIdentity.earfcn?.let { earfcn ->
         InfoListItem(
-            title = context.getString(R.string.earfcn),
+            title = stringResource(R.string.earfcn),
             value = earfcn,
             onCopy = { copyToClipboard(context, earfcn) }
         )
@@ -367,7 +370,7 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
 
     cellIdentity.uarfcn?.let { uarfcn ->
         InfoListItem(
-            title = context.getString(R.string.uarfcn),
+            title = stringResource(R.string.uarfcn),
             value = uarfcn,
             onCopy = { copyToClipboard(context, uarfcn) }
         )
@@ -375,7 +378,7 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
 
     cellIdentity.nrarfcn?.let { nrarfcn ->
         InfoListItem(
-            title = context.getString(R.string.nrarfcn),
+            title = stringResource(R.string.nrarfcn),
             value = nrarfcn,
             onCopy = { copyToClipboard(context, nrarfcn) }
         )

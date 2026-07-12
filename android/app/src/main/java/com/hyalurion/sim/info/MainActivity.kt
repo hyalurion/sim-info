@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.hyalurion.sim.info.data.LanguageManager
-import com.hyalurion.sim.info.data.ThemeManager
 import com.hyalurion.sim.info.ui.SimInfoApp
 import com.hyalurion.sim.info.ui.theme.SimInfoTheme
 

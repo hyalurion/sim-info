@@ -1,5 +1,6 @@
 package com.hyalurion.sim.info.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.compose.runtime.mutableIntStateOf
 import com.hyalurion.sim.info.R
-import com.hyalurion.sim.info.data.LanguageManager
 import com.hyalurion.sim.info.data.ThemeManager
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
@@ -35,6 +35,7 @@ import top.yukonga.miuix.kmp.icon.extended.Back
 import top.yukonga.miuix.kmp.preference.OverlayDropdownPreference
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
+@SuppressLint("LocalContextGetResourceValueCall")
 @Composable
 fun SettingsScreen(
     onThemeUpdated: (String) -> Unit = {},
@@ -66,7 +67,7 @@ fun SettingsScreen(
     }
     
     var selectedLanguageIndex by remember {
-        mutableStateOf(initialLanguageIndex)
+        mutableIntStateOf(initialLanguageIndex)
     }
     
     val themeOptions = listOf(
@@ -81,7 +82,7 @@ fun SettingsScreen(
     val initialThemeIndex = themeCodes.indexOf(savedTheme).takeIf { it >= 0 } ?: 2
     
     var selectedThemeIndex by remember {
-        mutableStateOf(initialThemeIndex)
+        mutableIntStateOf(initialThemeIndex)
     }
     
     Scaffold(
@@ -171,7 +172,7 @@ fun SettingsScreen(
                 val packageInfo = remember {
                     try {
                         context.packageManager.getPackageInfo(context.packageName, 0)
-                    } catch (e: PackageManager.NameNotFoundException) {
+                    } catch (_: PackageManager.NameNotFoundException) {
                         null
                     }
                 }

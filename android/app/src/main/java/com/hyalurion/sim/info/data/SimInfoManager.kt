@@ -1,9 +1,9 @@
 package com.hyalurion.sim.info.data
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import android.telephony.CellIdentityNr
 import android.telephony.CellInfo
 import android.telephony.CellInfoGsm
@@ -14,6 +14,7 @@ import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 import android.text.TextUtils
+import androidx.annotation.RequiresPermission
 import java.util.Locale
 
 class SimInfoManager(private val context: Context) {
@@ -21,6 +22,7 @@ class SimInfoManager(private val context: Context) {
     private val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     private val subscriptionManager = context.getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE) as SubscriptionManager
 
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     fun getSimInfoList(): List<SimInfo> {
         val simInfoList = mutableListOf<SimInfo>()
 
@@ -44,6 +46,7 @@ class SimInfoManager(private val context: Context) {
         return telephonyManager.simState == TelephonyManager.SIM_STATE_READY
     }
 
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     private fun getDefaultSimInfo(): SimInfo {
         val countryIso = telephonyManager.networkCountryIso?.takeIf { it.isNotBlank() }?.uppercase()
 
@@ -66,6 +69,7 @@ class SimInfoManager(private val context: Context) {
         )
     }
 
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     private fun getSimInfoFromSubscription(subscriptionInfo: SubscriptionInfo): SimInfo {
         val subscriptionId = subscriptionInfo.subscriptionId
         val subscriptionTelephonyManager = telephonyManager.createForSubscriptionId(subscriptionId)
@@ -75,7 +79,7 @@ class SimInfoManager(private val context: Context) {
             carrierName = subscriptionInfo.carrierName?.toString()?.takeIf { it.isNotBlank() },
             countryIso = countryIso,
             countryName = getCountryName(countryIso),
-            mcc = subscriptionInfo.mcc?.toString(),
+            mcc = subscriptionInfo.mcc.toString(),
             mnc = formatMnc(subscriptionInfo.mnc),
             networkType = getNetworkTypeName(subscriptionTelephonyManager),
             isVoipAvailable = isVoipAvailable(subscriptionTelephonyManager),
@@ -96,7 +100,7 @@ class SimInfoManager(private val context: Context) {
             if (!TextUtils.isEmpty(operator) && operator.length >= 3) {
                 operator.substring(0, 3)
             } else null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -108,7 +112,7 @@ class SimInfoManager(private val context: Context) {
                 val mnc = operator.substring(3)
                 formatMncString(mnc)
             } else null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -136,11 +140,12 @@ class SimInfoManager(private val context: Context) {
         return try {
             val locale = Locale("", isoCode)
             locale.displayCountry
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             isoCode // Fallback to ISO code if conversion fails
         }
     }
 
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     private fun getNetworkTypeName(tm: TelephonyManager = telephonyManager): String? {
         return try {
             when (tm.dataNetworkType) {
@@ -166,7 +171,7 @@ class SimInfoManager(private val context: Context) {
                 TelephonyManager.NETWORK_TYPE_NR -> "5G NR"
                 else -> tm.dataNetworkType.toString()
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -174,11 +179,12 @@ class SimInfoManager(private val context: Context) {
     private fun isVoipAvailable(tm: TelephonyManager = telephonyManager): Boolean {
         return try {
             tm.isVoiceCapable
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             false
         }
     }
 
+    @SuppressLint("HardwareIds")
     private fun getPhoneNumber(tm: TelephonyManager = telephonyManager, info: SubscriptionInfo? = null): String? {
         return try {
             if (!hasPhoneStatePermission()) return null
@@ -186,11 +192,11 @@ class SimInfoManager(private val context: Context) {
             var number: String? = null
 
             // Try to get from SubscriptionInfo first (API 29+)
-            if (info != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (info != null) {
                 number = try {
                     @Suppress("DEPRECATION")
                     info.number?.takeIf { it.isNotBlank() && it != "unknown" }
-                } catch (e: Exception) { null }
+                } catch (_: Exception) { null }
             }
 
             // Fallback to line1Number
@@ -198,13 +204,13 @@ class SimInfoManager(private val context: Context) {
                 number = try {
                     @Suppress("DEPRECATION")
                     tm.line1Number?.takeIf { it.isNotBlank() && it != "unknown" }
-                } catch (e: Exception) { null }
+                } catch (_: Exception) { null }
             }
 
             number
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -214,9 +220,9 @@ class SimInfoManager(private val context: Context) {
         return try {
             if (!hasPhoneStatePermission()) return null
             tm.isNetworkRoaming
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -233,9 +239,9 @@ class SimInfoManager(private val context: Context) {
                 TelephonyManager.DATA_ACTIVITY_DORMANT -> "Dormant"
                 else -> null
             }
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -251,9 +257,9 @@ class SimInfoManager(private val context: Context) {
                 TelephonyManager.DATA_SUSPENDED -> "Suspended"
                 else -> null
             }
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -271,9 +277,9 @@ class SimInfoManager(private val context: Context) {
             } else {
                 "Level $level/4"
             }
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -288,9 +294,9 @@ class SimInfoManager(private val context: Context) {
                 ?: return null
 
             parseCellIdentity(servingCell)
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -340,7 +346,7 @@ class SimInfoManager(private val context: Context) {
                 }
                 else -> null
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }
@@ -367,9 +373,9 @@ class SimInfoManager(private val context: Context) {
                     parts.joinToString(" ")
                 }
             }.joinToString("; ").takeIf { it.isNotBlank() }
-        } catch (e: SecurityException) {
+        } catch (_: SecurityException) {
             null
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             null
         }
     }

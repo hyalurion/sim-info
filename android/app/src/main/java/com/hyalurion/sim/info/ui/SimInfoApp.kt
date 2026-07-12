@@ -6,8 +6,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,11 +23,9 @@ import com.hyalurion.sim.info.data.ThemeManager
 import com.hyalurion.sim.info.ui.screens.LicensesScreen
 import com.hyalurion.sim.info.ui.screens.SettingsScreen
 import com.hyalurion.sim.info.ui.screens.SimInfoScreen
-import com.hyalurion.sim.info.ui.theme.ColorSchemeMode
+import top.yukonga.miuix.kmp.theme.ColorSchemeMode
 import com.hyalurion.sim.info.ui.theme.SimInfoTheme
-import com.hyalurion.sim.info.ui.theme.ThemeController
 import com.hyalurion.sim.info.ui.theme.LanguageController
-import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.basic.Surface
 
 @Composable
@@ -78,8 +74,8 @@ fun SimInfoApp() {
         else -> ColorSchemeMode.System
     }
     
-    val controller = remember {
-        ThemeController(initialThemeMode)
+    var currentThemeMode by remember {
+        mutableStateOf(initialThemeMode)
     }
     
     // Language management
@@ -98,7 +94,7 @@ fun SimInfoApp() {
             "dark" -> ColorSchemeMode.Dark
             else -> ColorSchemeMode.System
         }
-        controller.colorSchemeMode = colorSchemeMode
+        currentThemeMode = colorSchemeMode
         themeManager.saveTheme(newThemeMode)
     }
 
