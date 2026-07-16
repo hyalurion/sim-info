@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.hyalurion.sim.info.data.LanguageManager
+import com.hyalurion.sim.info.manager.FairMemoryManager
 import com.hyalurion.sim.info.manager.ShizukuManager
 import com.hyalurion.sim.info.ui.SimInfoApp
 import com.hyalurion.sim.info.ui.theme.LanguageController
@@ -27,6 +28,9 @@ class MainActivity : ComponentActivity() {
 
         // Initialize Shizuku manager
         ShizukuManager.init()
+
+        // Initialize Fair Memory Management
+        FairMemoryManager.initialize(this)
         
         // Load saved language setting (null means follow system language)
         val languageManager = LanguageManager(this)
@@ -41,6 +45,7 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         ShizukuManager.destroy()
+        FairMemoryManager.release()
     }
     
     // Handle configuration changes to ensure language setting is applied
