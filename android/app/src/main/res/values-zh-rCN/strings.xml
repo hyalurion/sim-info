@@ -98,4 +98,31 @@
     <string name="back">返回</string>
     <string name="no_browser_found">未找到浏览器</string>
     <string name="open_link_failed">打开链接失败</string>
+
+    <!-- 运营商伪装 -->
+    <string name="carrier_modifier_title">运营商伪装</string>
+    <string name="carrier_modifier_sim_select">SIM 卡</string>
+    <string name="carrier_modifier_sim_card">选择 SIM 卡</string>
+    <string name="carrier_modifier_current_config">当前覆盖配置</string>
+    <string name="carrier_modifier_no_override">无覆盖配置</string>
+    <string name="carrier_modifier_country_code">国家码</string>
+    <string name="carrier_modifier_select_country">选择国家</string>
+    <string name="carrier_modifier_custom_country_hint">自定义国家码（2 位字母）</string>
+    <string name="carrier_modifier_carrier_name">运营商名称</string>
+    <string name="carrier_modifier_select_carrier">选择运营商</string>
+    <string name="carrier_modifier_custom_carrier_hint">自定义运营商名称</string>
+    <string name="carrier_modifier_custom">自定义</string>
+    <string name="carrier_modifier_no_sim">未检测到 SIM 卡</string>
+    <string name="carrier_modifier_reset">还原</string>
+    <string name="carrier_modifier_save">保存生效</string>
+    <string name="carrier_modifier_reset_success">设置已还原</string>
+    <string name="carrier_modifier_reset_failed">还原失败：%1$s</string>
+    <string name="carrier_modifier_save_success">设置已保存</string>
+    <string name="carrier_modifier_save_failed">保存失败：%1$s</string>
+
+    <!-- Shizuku -->
+    <string name="shizuku_not_installed">未安装 Shizuku，请先安装并启动 Shizuku 服务。</string>
+    <string name="shizuku_not_running">Shizuku 未运行，请启动 Shizuku 服务。</string>
+    <string name="shizuku_waiting_permission">修改运营商配置需要 Shizuku 权限。</string>
+    <string name="shizuku_request_permission">授予权限</string>
 </resources>

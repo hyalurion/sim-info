@@ -98,4 +98,31 @@
     <string name="back">Back</string>
     <string name="no_browser_found">No browser found</string>
     <string name="open_link_failed">Failed to open link</string>
+
+    <!-- Carrier Modifier -->
+    <string name="carrier_modifier_title">Carrier Modifier</string>
+    <string name="carrier_modifier_sim_select">SIM Card</string>
+    <string name="carrier_modifier_sim_card">Select SIM Card</string>
+    <string name="carrier_modifier_current_config">Current Override</string>
+    <string name="carrier_modifier_no_override">No override configuration</string>
+    <string name="carrier_modifier_country_code">Country Code</string>
+    <string name="carrier_modifier_select_country">Select Country</string>
+    <string name="carrier_modifier_custom_country_hint">Custom country code (2 letters)</string>
+    <string name="carrier_modifier_carrier_name">Carrier Name</string>
+    <string name="carrier_modifier_select_carrier">Select Carrier</string>
+    <string name="carrier_modifier_custom_carrier_hint">Custom carrier name</string>
+    <string name="carrier_modifier_custom">Custom</string>
+    <string name="carrier_modifier_no_sim">No SIM card detected</string>
+    <string name="carrier_modifier_reset">Reset</string>
+    <string name="carrier_modifier_save">Save</string>
+    <string name="carrier_modifier_reset_success">Settings reset</string>
+    <string name="carrier_modifier_reset_failed">Reset failed: %1$s</string>
+    <string name="carrier_modifier_save_success">Settings saved</string>
+    <string name="carrier_modifier_save_failed">Save failed: %1$s</string>
+
+    <!-- Shizuku -->
+    <string name="shizuku_not_installed">Shizuku is not installed. Please install Shizuku and start the service first.</string>
+    <string name="shizuku_not_running">Shizuku is not running. Please start the Shizuku service.</string>
+    <string name="shizuku_waiting_permission">Shizuku permission is required to modify carrier config.</string>
+    <string name="shizuku_request_permission">Grant Permission</string>
 </resources>

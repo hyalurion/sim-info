@@ -8,9 +8,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.hyalurion.sim.info.data.LanguageManager
+import com.hyalurion.sim.info.manager.ShizukuManager
 import com.hyalurion.sim.info.ui.SimInfoApp
 import com.hyalurion.sim.info.ui.theme.LanguageController
 import com.hyalurion.sim.info.ui.theme.SimInfoTheme
+import org.lsposed.hiddenapibypass.HiddenApiBypass
 import top.yukonga.miuix.kmp.theme.ColorSchemeMode
 import top.yukonga.miuix.kmp.theme.ThemeController
 
@@ -18,6 +20,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Initialize Hidden API access for carrier config modification
+        HiddenApiBypass.addHiddenApiExemptions("L")
+        HiddenApiBypass.addHiddenApiExemptions("I")
+
+        // Initialize Shizuku manager
+        ShizukuManager.init()
         
         // Load saved language setting (null means follow system language)
         val languageManager = LanguageManager(this)
@@ -27,6 +36,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             SimInfoApp()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ShizukuManager.destroy()
     }
     
     // Handle configuration changes to ensure language setting is applied

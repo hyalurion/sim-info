@@ -70,6 +70,7 @@ class SimInfoManager(private val context: Context) {
     }
 
     @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    @Suppress("DEPRECATION")
     private fun getSimInfoFromSubscription(subscriptionInfo: SubscriptionInfo): SimInfo {
         val subscriptionId = subscriptionInfo.subscriptionId
         val subscriptionTelephonyManager = telephonyManager.createForSubscriptionId(subscriptionId)
@@ -138,7 +139,7 @@ class SimInfoManager(private val context: Context) {
         if (isoCode.isNullOrBlank()) return null
         
         return try {
-            val locale = Locale("", isoCode)
+            val locale = Locale.Builder().setRegion(isoCode).build()
             locale.displayCountry
         } catch (_: Exception) {
             isoCode // Fallback to ISO code if conversion fails
@@ -146,6 +147,7 @@ class SimInfoManager(private val context: Context) {
     }
 
     @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    @Suppress("DEPRECATION")
     private fun getNetworkTypeName(tm: TelephonyManager = telephonyManager): String? {
         return try {
             when (tm.dataNetworkType) {
@@ -176,6 +178,7 @@ class SimInfoManager(private val context: Context) {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun isVoipAvailable(tm: TelephonyManager = telephonyManager): Boolean {
         return try {
             tm.isVoiceCapable

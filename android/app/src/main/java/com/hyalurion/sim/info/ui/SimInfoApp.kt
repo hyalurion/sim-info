@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hyalurion.sim.info.data.LanguageManager
 import com.hyalurion.sim.info.data.ThemeManager
+import com.hyalurion.sim.info.ui.screens.CarrierModifierScreen
 import com.hyalurion.sim.info.ui.screens.LicensesScreen
 import com.hyalurion.sim.info.ui.screens.SettingsScreen
 import com.hyalurion.sim.info.ui.screens.SimInfoScreen
@@ -152,7 +153,8 @@ fun SimInfoApp() {
                     SimInfoScreen(
                         hasPermission = hasPhonePermission,
                         onRequestPermission = requestPermission,
-                        onNavigateToSettings = { navController.navigate("settings") }
+                        onNavigateToSettings = { navController.navigate("settings") },
+                        onNavigateToCarrierModifier = { navController.navigate("carrier_modifier") }
                     )
                 }
                 composable("settings") {
@@ -166,6 +168,11 @@ fun SimInfoApp() {
                 }
                 composable("licenses") {
                     LicensesScreen(
+                        onBack = { navController.popBackStack() }
+                    )
+                }
+                composable("carrier_modifier") {
+                    CarrierModifierScreen(
                         onBack = { navController.popBackStack() }
                     )
                 }

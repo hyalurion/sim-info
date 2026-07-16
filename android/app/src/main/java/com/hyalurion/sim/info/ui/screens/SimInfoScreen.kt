@@ -34,6 +34,7 @@ import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Copy
+import top.yukonga.miuix.kmp.icon.extended.Edit
 import top.yukonga.miuix.kmp.icon.extended.Settings
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import android.widget.Toast
@@ -47,7 +48,8 @@ import com.hyalurion.sim.info.data.SimInfoManager
 fun SimInfoScreen(
     hasPermission: Boolean = false,
     onRequestPermission: () -> Unit = {},
-    onNavigateToSettings: () -> Unit = {}
+    onNavigateToSettings: () -> Unit = {},
+    onNavigateToCarrierModifier: () -> Unit = {}
 ) {
     val context = LocalContext.current
     var simInfoList by remember { mutableStateOf<List<SimInfo>?>(null) }
@@ -66,6 +68,7 @@ fun SimInfoScreen(
         if (hasPermission) {
             try {
                 val simInfoManager = SimInfoManager(context)
+                @SuppressLint("MissingPermission")
                 val infoList = simInfoManager.getSimInfoList()
                 if (infoList.isEmpty()) {
                     error = context.getString(R.string.no_sim_card)
@@ -173,6 +176,13 @@ fun SimInfoScreen(
                                     .padding(top = 8.dp),
                                 horizontalArrangement = Arrangement.End
                             ) {
+                                IconButton(onClick = onNavigateToCarrierModifier) {
+                                    Icon(
+                                        imageVector = MiuixIcons.Edit,
+                                        contentDescription = "Carrier Modifier",
+                                        tint = MiuixTheme.colorScheme.onBackground
+                                    )
+                                }
                                 IconButton(onClick = onNavigateToSettings) {
                                     Icon(
                                         imageVector = MiuixIcons.Settings,

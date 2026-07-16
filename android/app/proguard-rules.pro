@@ -30,6 +30,21 @@
 -keep class top.yukonga.miuix.** { *; }
 -dontwarn top.yukonga.miuix.**
 
+# Shizuku
+-keep class rikka.shizuku.** { *; }
+-dontwarn rikka.shizuku.**
+-keep class dev.rikka.shizuku.** { *; }
+-dontwarn dev.rikka.shizuku.**
+
+# HiddenApiBypass
+-keep class org.lsposed.hiddenapibypass.** { *; }
+-dontwarn org.lsposed.hiddenapibypass.**
+
+# Carrier config hidden APIs (system classes, only suppress warnings)
+-dontwarn com.android.internal.telephony.**
+-dontwarn android.telephony.TelephonyFrameworkInitializer
+
+# androidx navigation
 -keep class androidx.navigation.** { *; }
 -keep class androidx.compose.navigation.** { *; }
 

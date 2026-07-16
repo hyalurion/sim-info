@@ -98,4 +98,31 @@
     <string name="back">戻る</string>
     <string name="no_browser_found">ブラウザが見つかりません</string>
     <string name="open_link_failed">リンクを開けませんでした</string>
+
+    <!-- キャリア偽装 -->
+    <string name="carrier_modifier_title">キャリア偽装</string>
+    <string name="carrier_modifier_sim_select">SIM カード</string>
+    <string name="carrier_modifier_sim_card">SIM カードを選択</string>
+    <string name="carrier_modifier_current_config">現在のオーバーライド</string>
+    <string name="carrier_modifier_no_override">オーバーライド設定なし</string>
+    <string name="carrier_modifier_country_code">国コード</string>
+    <string name="carrier_modifier_select_country">国を選択</string>
+    <string name="carrier_modifier_custom_country_hint">カスタム国コード（2 文字）</string>
+    <string name="carrier_modifier_carrier_name">キャリア名</string>
+    <string name="carrier_modifier_select_carrier">キャリアを選択</string>
+    <string name="carrier_modifier_custom_carrier_hint">カスタムキャリア名</string>
+    <string name="carrier_modifier_custom">カスタム</string>
+    <string name="carrier_modifier_no_sim">SIM カードが検出されません</string>
+    <string name="carrier_modifier_reset">リセット</string>
+    <string name="carrier_modifier_save">保存</string>
+    <string name="carrier_modifier_reset_success">設定をリセットしました</string>
+    <string name="carrier_modifier_reset_failed">リセット失敗：%1$s</string>
+    <string name="carrier_modifier_save_success">設定を保存しました</string>
+    <string name="carrier_modifier_save_failed">保存失敗：%1$s</string>
+
+    <!-- Shizuku -->
+    <string name="shizuku_not_installed">Shizuku がインストールされていません。Shizuku をインストールしてサービスを開始してください。</string>
+    <string name="shizuku_not_running">Shizuku が実行されていません。Shizuku サービスを開始してください。</string>
+    <string name="shizuku_waiting_permission">キャリア設定を変更するには Shizuku 権限が必要です。</string>
+    <string name="shizuku_request_permission">権限を付与</string>
 </resources>
