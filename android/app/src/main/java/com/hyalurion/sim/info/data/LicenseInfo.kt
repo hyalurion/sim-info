@@ -85,21 +85,21 @@ END OF TERMS AND CONDITIONS
         ),
         LicenseInfo(
             name = "AndroidX Compose BOM",
-            version = "2026.06.01",
+            version = "2026.09.00",
             license = "Apache License 2.0",
             url = "https://developer.android.com/jetpack/androidx/releases/compose",
             licenseText = "Apache License 2.0 - See full license text above."
         ),
         LicenseInfo(
             name = "AndroidX Navigation Compose",
-            version = "2.9.8",
+            version = "2.10.2",
             license = "Apache License 2.0",
             url = "https://developer.android.com/jetpack/androidx/releases/navigation",
             licenseText = "Apache License 2.0 - See full license text above."
         ),
         LicenseInfo(
             name = "Miuix",
-            version = "0.9.3",
+            version = "0.9.4",
             license = "Apache License 2.0",
             url = "https://github.com/compose-miuix-ui/miuix",
             licenseText = "Apache License 2.0 - See full license text above."
@@ -135,7 +135,7 @@ SOFTWARE.
         ),
         LicenseInfo(
             name = "HiddenApiBypass",
-            version = "6.1",
+            version = "6.2",
             license = "GNU Lesser General Public License v3.0",
             url = "https://github.com/LSPosed/AndroidHiddenApiBypass",
             licenseText = """

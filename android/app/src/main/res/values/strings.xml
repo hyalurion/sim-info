@@ -72,14 +72,14 @@
 
     <!-- Settings -->
     <string name="tab_settings">Settings</string>
-    <string name="general_settings_title">General Settings</string>
-    <string name="language_settings">Language Settings</string>
+    <string name="general_settings_title">General</string>
+    <string name="language_settings">Language</string>
     <string name="language_follow_system">System</string>
     <string name="language_zh_cn">Chinese (Simplified)</string>
     <string name="language_zh_tw">Chinese (Traditional)</string>
     <string name="language_en">English</string>
     <string name="language_ja">Japanese</string>
-    <string name="theme_settings">Theme Settings</string>
+    <string name="theme_settings">Theme</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_auto">Auto</string>

@@ -1,16 +1,27 @@
 package com.hyalurion.sim.info.ui.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,26 +33,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import top.yukonga.miuix.kmp.basic.BasicComponent
+import com.hyalurion.sim.info.R
+import com.hyalurion.sim.info.data.CellIdentityInfo
+import com.hyalurion.sim.info.data.SimInfo
+import com.hyalurion.sim.info.data.SimInfoManager
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
+import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
+import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.SmallTitle
+import top.yukonga.miuix.kmp.basic.Surface
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.icon.MiuixIcons
 import top.yukonga.miuix.kmp.icon.extended.Copy
 import top.yukonga.miuix.kmp.icon.extended.Edit
 import top.yukonga.miuix.kmp.icon.extended.Settings
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import android.widget.Toast
-import com.hyalurion.sim.info.R
-import com.hyalurion.sim.info.data.CellIdentityInfo
-import com.hyalurion.sim.info.data.SimInfo
-import com.hyalurion.sim.info.data.SimInfoManager
+import top.yukonga.miuix.kmp.utils.PressFeedbackType
 
 @SuppressLint("LocalContextGetResourceValueCall")
 @Composable
@@ -92,6 +106,22 @@ fun SimInfoScreen(
                 title = stringResource(R.string.app_name),
                 largeTitle = stringResource(R.string.app_name),
                 navigationIcon = {},
+                actions = {
+                    IconButton(onClick = onNavigateToCarrierModifier) {
+                        Icon(
+                            imageVector = MiuixIcons.Edit,
+                            contentDescription = stringResource(R.string.carrier_modifier_title),
+                            tint = MiuixTheme.colorScheme.onBackground
+                        )
+                    }
+                    IconButton(onClick = onNavigateToSettings) {
+                        Icon(
+                            imageVector = MiuixIcons.Settings,
+                            contentDescription = stringResource(R.string.tab_settings),
+                            tint = MiuixTheme.colorScheme.onBackground
+                        )
+                    }
+                },
                 scrollBehavior = scrollBehavior
             )
         }
@@ -99,7 +129,7 @@ fun SimInfoScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 24.dp)
         ) {
             when {
                 isLoading -> {
@@ -131,14 +161,14 @@ fun SimInfoScreen(
                             color = MiuixTheme.colorScheme.onSurface,
                             modifier = Modifier.padding(horizontal = 16.dp)
                         )
-                        
+
                         Spacer(modifier = Modifier.height(24.dp))
 
                         if (!hasPermission) {
                             Card(
                                 onClick = onRequestPermission,
                                 showIndication = true,
-                                pressFeedbackType = top.yukonga.miuix.kmp.utils.PressFeedbackType.Sink
+                                pressFeedbackType = PressFeedbackType.Sink
                             ) {
                                 Box(
                                     modifier = Modifier
@@ -153,7 +183,7 @@ fun SimInfoScreen(
                                     )
                                 }
                             }
-                            
+
                             Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
@@ -163,39 +193,14 @@ fun SimInfoScreen(
                         modifier = Modifier
                             .fillMaxSize()
                             .nestedScroll(scrollBehavior.nestedScrollConnection),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                            top = paddingValues.calculateTopPadding(),
+                        contentPadding = PaddingValues(
+                            top = paddingValues.calculateTopPadding() + 8.dp,
                             bottom = 16.dp
                         ),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        item {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 8.dp),
-                                horizontalArrangement = Arrangement.End
-                            ) {
-                                IconButton(onClick = onNavigateToCarrierModifier) {
-                                    Icon(
-                                        imageVector = MiuixIcons.Edit,
-                                        contentDescription = "Carrier Modifier",
-                                        tint = MiuixTheme.colorScheme.onBackground
-                                    )
-                                }
-                                IconButton(onClick = onNavigateToSettings) {
-                                    Icon(
-                                        imageVector = MiuixIcons.Settings,
-                                        contentDescription = "Settings",
-                                        tint = MiuixTheme.colorScheme.onBackground
-                                    )
-                                }
-                            }
-                        }
-                        
                         items(simInfoList!!.size) { index ->
-                            val simInfo = simInfoList!![index]
-                            SimInfoCard(simInfo = simInfo, slotIndex = index + 1)
+                            SimInfoCard(simInfo = simInfoList!![index], slotIndex = index + 1)
                         }
                     }
                 }
@@ -206,166 +211,197 @@ fun SimInfoScreen(
 
 @Composable
 private fun SimInfoCard(simInfo: SimInfo, slotIndex: Int) {
-    val context = LocalContext.current
-    
-    Card(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+    Column(modifier = Modifier.fillMaxWidth()) {
+        // Page-level SIM heading stays outside the card, separate from the in-card section labels.
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Text(
+                text = stringResource(R.string.sim_slot, slotIndex),
+                style = MiuixTheme.textStyles.title3,
+                fontWeight = FontWeight.Medium,
+                color = MiuixTheme.colorScheme.primary
+            )
+
+            simInfo.simState?.let { state ->
                 Text(
-                    text = stringResource(R.string.sim_slot, slotIndex),
-                    style = MiuixTheme.textStyles.headline1,
-                    color = MiuixTheme.colorScheme.primary
+                    text = localizedSimState(state),
+                    style = MiuixTheme.textStyles.body2,
+                    color = MiuixTheme.colorScheme.onSurfaceVariantSummary,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
-                
-                simInfo.simState?.let { state ->
-                    Text(
-                        text = state,
-                        style = MiuixTheme.textStyles.body2,
-                        color = MiuixTheme.colorScheme.onSurface
-                    )
+            }
+        }
+
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            insideMargin = PaddingValues(16.dp)
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                val sections = buildInfoSections(simInfo)
+                sections.forEachIndexed { index, section ->
+                    if (index > 0) {
+                        Spacer(modifier = Modifier.height(14.dp))
+                    }
+
+                    val title = section.title
+                    if (title != null) {
+                        // Align section labels with the text inside the cells, not with the card edge.
+                        SmallTitle(
+                            text = title,
+                            insideMargin = PaddingValues(12.dp, 2.dp)
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                    }
+
+                    InfoGrid(items = section.items)
                 }
-            }
-            
-            Spacer(modifier = Modifier.height(16.dp))
-
-            SmallTitle(text = stringResource(R.string.section_basic_info))
-            
-            Spacer(modifier = Modifier.height(8.dp))
-
-            InfoListItem(
-                title = stringResource(R.string.carrier_name),
-                value = simInfo.carrierName ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.carrierName) }
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.country_region),
-                value = simInfo.countryName ?: simInfo.countryIso ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.countryName ?: simInfo.countryIso) }
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.iso_country_code),
-                value = simInfo.countryIso ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.countryIso) }
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.mobile_country_code),
-                value = simInfo.mcc ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.mcc) }
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.mobile_network_code),
-                value = simInfo.mnc ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.mnc) }
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.phone_number),
-                value = simInfo.phoneNumber ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.phoneNumber) }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            SmallTitle(text = stringResource(R.string.section_network_status))
-            
-            Spacer(modifier = Modifier.height(8.dp))
-
-            InfoListItem(
-                title = stringResource(R.string.network_type),
-                value = simInfo.networkType ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.networkType) }
-            )
-
-            val roamingStatus = when (simInfo.isNetworkRoaming) {
-                true -> stringResource(R.string.roaming_yes)
-                false -> stringResource(R.string.roaming_no)
-                null -> stringResource(R.string.not_available)
-            }
-            InfoListItem(
-                title = stringResource(R.string.network_roaming),
-                value = roamingStatus,
-                showCopyIcon = false
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.data_activity),
-                value = simInfo.dataActivity ?: stringResource(R.string.not_available),
-                showCopyIcon = false
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.data_state),
-                value = simInfo.dataState ?: stringResource(R.string.not_available),
-                showCopyIcon = false
-            )
-
-            val voipStatus = when (simInfo.isVoipAvailable) {
-                true -> stringResource(R.string.voip_supported)
-                false -> stringResource(R.string.voip_not_supported)
-                null -> stringResource(R.string.not_available)
-            }
-            InfoListItem(
-                title = stringResource(R.string.voip_support),
-                value = voipStatus,
-                showCopyIcon = false
-            )
-
-            InfoListItem(
-                title = stringResource(R.string.signal_strength),
-                value = simInfo.signalStrength ?: stringResource(R.string.not_available),
-                onCopy = { copyToClipboard(context, simInfo.signalStrength) }
-            )
-
-            if (simInfo.cellIdentity != null) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                SmallTitle(text = stringResource(R.string.section_cell_identity))
-                
-                Spacer(modifier = Modifier.height(8.dp))
-
-                CellIdentitySection(simInfo.cellIdentity)
-            }
-
-            if (!simInfo.neighboringCellInfo.isNullOrBlank()) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                SmallTitle(text = stringResource(R.string.section_neighboring_cells))
-                
-                Spacer(modifier = Modifier.height(8.dp))
-
-                InfoListItem(
-                    title = stringResource(R.string.neighboring_cell_info),
-                    value = simInfo.neighboringCellInfo,
-                    onCopy = { copyToClipboard(context, simInfo.neighboringCellInfo) }
-                )
             }
         }
     }
 }
 
-@Composable
-private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
-    val context = LocalContext.current
+// A compact label/value pair. Short values share a row; long values span the full width.
+private data class InfoItem(
+    val label: String,
+    val value: String,
+    val copyValue: String? = null,
+    val isUnavailable: Boolean = false,
+    val fullWidth: Boolean = false,
+    val numeric: Boolean = false
+)
 
-    cellIdentity.type?.let { type ->
-        InfoListItem(
-            title = stringResource(R.string.cell_type),
-            value = type,
-            showCopyIcon = false
+private data class InfoSection(
+    val title: String?,
+    val items: List<InfoItem>
+)
+
+private fun infoItem(
+    label: String,
+    rawValue: String?,
+    notAvailable: String,
+    fullWidth: Boolean = false,
+    numeric: Boolean = false,
+    copyable: Boolean = true
+): InfoItem = InfoItem(
+    label = label,
+    value = rawValue ?: notAvailable,
+    copyValue = if (copyable && !rawValue.isNullOrBlank()) rawValue else null,
+    isUnavailable = rawValue.isNullOrBlank(),
+    fullWidth = fullWidth,
+    numeric = numeric
+)
+
+@Composable
+private fun buildInfoSections(simInfo: SimInfo): List<InfoSection> {
+    val na = stringResource(R.string.not_available)
+    val sections = mutableListOf<InfoSection>()
+
+    val basicTitle = stringResource(R.string.section_basic_info)
+    val carrierLabel = stringResource(R.string.carrier_name)
+    val countryLabel = stringResource(R.string.country_region)
+    val isoLabel = stringResource(R.string.iso_country_code)
+    val mccLabel = stringResource(R.string.mobile_country_code)
+    val mncLabel = stringResource(R.string.mobile_network_code)
+    val phoneLabel = stringResource(R.string.phone_number)
+    sections.add(
+        InfoSection(
+            title = basicTitle,
+            items = listOf(
+                infoItem(carrierLabel, simInfo.carrierName, na),
+                infoItem(countryLabel, simInfo.countryName ?: simInfo.countryIso, na),
+                infoItem(isoLabel, simInfo.countryIso, na, numeric = true),
+                infoItem(mccLabel, simInfo.mcc, na, numeric = true),
+                infoItem(mncLabel, simInfo.mnc, na, numeric = true),
+                infoItem(phoneLabel, simInfo.phoneNumber, na, fullWidth = true, numeric = true)
+            )
+        )
+    )
+
+    val networkTitle = stringResource(R.string.section_network_status)
+    val networkTypeLabel = stringResource(R.string.network_type)
+    val roamingLabel = stringResource(R.string.network_roaming)
+    val roamingValue = when (simInfo.isNetworkRoaming) {
+        true -> stringResource(R.string.roaming_yes)
+        false -> stringResource(R.string.roaming_no)
+        null -> na
+    }
+    val dataActivityLabel = stringResource(R.string.data_activity)
+    val dataStateLabel = stringResource(R.string.data_state)
+    val voipLabel = stringResource(R.string.voip_support)
+    val voipValue = when (simInfo.isVoipAvailable) {
+        true -> stringResource(R.string.voip_supported)
+        false -> stringResource(R.string.voip_not_supported)
+        null -> na
+    }
+    val signalLabel = stringResource(R.string.signal_strength)
+    sections.add(
+        InfoSection(
+            title = networkTitle,
+            items = listOf(
+                infoItem(networkTypeLabel, simInfo.networkType, na),
+                InfoItem(
+                    label = roamingLabel,
+                    value = roamingValue,
+                    isUnavailable = simInfo.isNetworkRoaming == null
+                ),
+                infoItem(dataActivityLabel, simInfo.dataActivity, na, copyable = false),
+                infoItem(dataStateLabel, simInfo.dataState, na, copyable = false),
+                InfoItem(
+                    label = voipLabel,
+                    value = voipValue,
+                    isUnavailable = simInfo.isVoipAvailable == null
+                ),
+                infoItem(signalLabel, simInfo.signalStrength, na, fullWidth = true)
+            )
+        )
+    )
+
+    val cellIdentity = simInfo.cellIdentity
+    if (cellIdentity != null) {
+        val cellItems = buildCellIdentityItems(cellIdentity, na)
+        if (cellItems.isNotEmpty()) {
+            sections.add(
+                InfoSection(
+                    title = stringResource(R.string.section_cell_identity),
+                    items = cellItems
+                )
+            )
+        }
+    }
+
+    val neighbors = simInfo.neighboringCellInfo
+    if (!neighbors.isNullOrBlank()) {
+        // The label already names the section, so no separate SmallTitle is needed.
+        sections.add(
+            InfoSection(
+                title = null,
+                items = listOf(
+                    infoItem(
+                        label = stringResource(R.string.neighboring_cell_info),
+                        rawValue = neighbors,
+                        notAvailable = na,
+                        fullWidth = true
+                    )
+                )
+            )
         )
     }
+
+    return sections
+}
+
+@Composable
+private fun buildCellIdentityItems(cellIdentity: CellIdentityInfo, notAvailable: String): List<InfoItem> {
+    val items = mutableListOf<InfoItem>()
+
+    val typeLabel = stringResource(R.string.cell_type)
+    cellIdentity.type?.let { items.add(InfoItem(label = typeLabel, value = it)) }
 
     val lacTac = cellIdentity.lac ?: cellIdentity.tac
     if (lacTac != null) {
@@ -374,11 +410,7 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
         } else {
             stringResource(R.string.lac)
         }
-        InfoListItem(
-            title = label,
-            value = lacTac,
-            onCopy = { copyToClipboard(context, lacTac) }
-        )
+        items.add(infoItem(label, lacTac, notAvailable, numeric = true))
     }
 
     val ciCid = cellIdentity.ci ?: cellIdentity.cid ?: cellIdentity.nci
@@ -388,79 +420,171 @@ private fun CellIdentitySection(cellIdentity: CellIdentityInfo) {
             cellIdentity.ci != null -> stringResource(R.string.ci)
             else -> stringResource(R.string.cid)
         }
-        InfoListItem(
-            title = label,
-            value = ciCid,
-            onCopy = { copyToClipboard(context, ciCid) }
-        )
+        items.add(infoItem(label, ciCid, notAvailable, numeric = true))
     }
 
-    cellIdentity.pci?.let { pci ->
-        InfoListItem(
-            title = stringResource(R.string.pci),
-            value = pci,
-            onCopy = { copyToClipboard(context, pci) }
-        )
-    }
+    val pciLabel = stringResource(R.string.pci)
+    cellIdentity.pci?.let { items.add(infoItem(pciLabel, it, notAvailable, numeric = true)) }
 
-    cellIdentity.psc?.let { psc ->
-        InfoListItem(
-            title = stringResource(R.string.psc),
-            value = psc,
-            onCopy = { copyToClipboard(context, psc) }
-        )
-    }
+    val pscLabel = stringResource(R.string.psc)
+    cellIdentity.psc?.let { items.add(infoItem(pscLabel, it, notAvailable, numeric = true)) }
 
-    cellIdentity.earfcn?.let { earfcn ->
-        InfoListItem(
-            title = stringResource(R.string.earfcn),
-            value = earfcn,
-            onCopy = { copyToClipboard(context, earfcn) }
-        )
-    }
+    val earfcnLabel = stringResource(R.string.earfcn)
+    cellIdentity.earfcn?.let { items.add(infoItem(earfcnLabel, it, notAvailable, numeric = true)) }
 
-    cellIdentity.uarfcn?.let { uarfcn ->
-        InfoListItem(
-            title = stringResource(R.string.uarfcn),
-            value = uarfcn,
-            onCopy = { copyToClipboard(context, uarfcn) }
-        )
-    }
+    val uarfcnLabel = stringResource(R.string.uarfcn)
+    cellIdentity.uarfcn?.let { items.add(infoItem(uarfcnLabel, it, notAvailable, numeric = true)) }
 
-    cellIdentity.nrarfcn?.let { nrarfcn ->
-        InfoListItem(
-            title = stringResource(R.string.nrarfcn),
-            value = nrarfcn,
-            onCopy = { copyToClipboard(context, nrarfcn) }
-        )
-    }
+    val nrarfcnLabel = stringResource(R.string.nrarfcn)
+    cellIdentity.nrarfcn?.let { items.add(infoItem(nrarfcnLabel, it, notAvailable, numeric = true)) }
+
+    return items
 }
 
 @Composable
-private fun InfoListItem(
-    title: String,
-    value: String,
-    onCopy: (() -> Unit)? = null,
-    showCopyIcon: Boolean = true
-) {
-    BasicComponent(
-        title = title,
-        summary = value,
-        onClick = if (onCopy != null && showCopyIcon) onCopy else null,
-        endActions = if (showCopyIcon && onCopy != null) {
-            {
-                IconButton(
-                    onClick = onCopy
+private fun InfoGrid(items: List<InfoItem>) {
+    BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+        // Two columns on phones, three on tablets/foldables and wide windows.
+        val columns = if (maxWidth >= 600.dp) 3 else 2
+        val rows = buildInfoRows(items, columns)
+
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            rows.forEach { rowItems ->
+                val fullWidthRow = rowItems.size == 1 && rowItems[0].fullWidth
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    // Cells always split the row evenly, so partial rows never leave an empty slot.
+                    rowItems.forEach { item ->
+                        val cellModifier = if (fullWidthRow) {
+                            Modifier.fillMaxWidth()
+                        } else {
+                            Modifier.weight(1f)
+                        }
+                        InfoTile(
+                            item = item,
+                            modifier = cellModifier
+                                .heightIn(min = 62.dp)
+                                .fillMaxHeight()
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Pack short cells into rows while keeping long cells on their own row, preserving field order.
+private fun buildInfoRows(items: List<InfoItem>, columns: Int): List<List<InfoItem>> {
+    val rows = mutableListOf<List<InfoItem>>()
+    var pending = mutableListOf<InfoItem>()
+
+    // A single leftover cell spans the whole row instead of leaving half of it blank.
+    fun flush() {
+        if (pending.isEmpty()) return
+        rows.add(
+            if (pending.size == 1) listOf(pending[0].copy(fullWidth = true)) else pending
+        )
+        pending = mutableListOf()
+    }
+
+    items.forEach { item ->
+        if (item.fullWidth) {
+            flush()
+            rows.add(listOf(item))
+        } else {
+            pending.add(item)
+            if (pending.size == columns) {
+                flush()
+            }
+        }
+    }
+
+    flush()
+    return rows
+}
+
+@Composable
+private fun InfoTile(item: InfoItem, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val copyValue = item.copyValue
+    val clickModifier = if (copyValue != null) {
+        Modifier.clickable { copyToClipboard(context, copyValue) }
+    } else {
+        Modifier
+    }
+
+    Surface(
+        modifier = modifier,
+        shape = RoundedCornerShape(12.dp),
+        color = MiuixTheme.colorScheme.surfaceContainerHighest,
+        contentColor = MiuixTheme.colorScheme.onSurfaceContainerHighest,
+        // surfaceContainerHigh equals surfaceContainer in dark mode; the outline keeps cells visible.
+        border = BorderStroke(1.dp, MiuixTheme.colorScheme.outline)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .then(clickModifier)
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = item.label,
+                style = MiuixTheme.textStyles.footnote1,
+                color = MiuixTheme.colorScheme.onSurfaceVariantSummary,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            Spacer(modifier = Modifier.height(2.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = item.value,
+                    modifier = Modifier.weight(1f),
+                    style = MiuixTheme.textStyles.body1,
+                    fontWeight = FontWeight.Medium,
+                    fontFamily = if (item.numeric) FontFamily.Monospace else null,
+                    color = if (item.isUnavailable) {
+                        MiuixTheme.colorScheme.onSurfaceContainerVariant
+                    } else {
+                        MiuixTheme.colorScheme.onSurfaceContainerHighest
+                    },
+                    maxLines = if (item.fullWidth) 2 else 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                if (copyValue != null) {
+                    Spacer(modifier = Modifier.width(4.dp))
                     Icon(
                         imageVector = MiuixIcons.Copy,
                         contentDescription = "Copy",
-                        tint = MiuixTheme.colorScheme.primary
+                        modifier = Modifier.size(14.dp),
+                        tint = MiuixTheme.colorScheme.onSurfaceContainerVariant
                     )
                 }
             }
-        } else null
-    )
+        }
+    }
+}
+
+// TelephonyManager returns English state strings; reuse the existing localized resources.
+@Composable
+private fun localizedSimState(state: String): String = when (state) {
+    "Absent" -> stringResource(R.string.sim_state_absent)
+    "PIN Required" -> stringResource(R.string.sim_state_pin_required)
+    "PUK Required" -> stringResource(R.string.sim_state_puk_required)
+    "Network Locked" -> stringResource(R.string.sim_state_network_locked)
+    "Ready" -> stringResource(R.string.sim_state_ready)
+    "Not Ready" -> stringResource(R.string.sim_state_not_ready)
+    "Permanently Disabled" -> stringResource(R.string.sim_state_perm_disabled)
+    "Card IO Error" -> stringResource(R.string.sim_state_card_io_error)
+    "Card Restricted" -> stringResource(R.string.sim_state_card_restricted)
+    else -> state
 }
 
 private fun copyToClipboard(context: android.content.Context, text: String?) {

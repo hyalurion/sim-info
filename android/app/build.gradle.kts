@@ -1,4 +1,5 @@
 import java.util.*
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 
 plugins {
     alias(libs.plugins.android.application)
@@ -77,6 +78,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_25
         targetCompatibility = JavaVersion.VERSION_25
+    }
+    // Lint must run on a JVM at least as new as the Java 25 target compatibility.
+    lint {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(25))
     }
     buildFeatures {
         compose = true
